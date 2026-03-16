@@ -7,7 +7,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-mcp = FastMCP("teradata-mcp-minimal")
+mcp = FastMCP(
+    "teradata-mcp-minimal",
+    host=os.environ.get("MCP_HOST", "127.0.0.1"),
+    port=int(os.environ.get("MCP_PORT", "8000")),
+)
 
 _SAFE_IDENTIFIER = re.compile(r"^[A-Za-z0-9_]+$")
 
