@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"import sys,json,re; d=json.load(sys.stdin); p=d.get('file_path',''); blocked=bool(re.search(r'(^|[/\\\\\\\\])\\.env$', p)); print('Reading .env is forbidden' if blocked else ''); sys.exit(2 if blocked else 0)\""
+          }
+        ]
+      },
+      {
+        "matcher": "Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"import sys,json,re; d=json.load(sys.stdin); p=d.get('path',''); blocked=bool(p and re.search(r'(^|[/\\\\\\\\])\\.env$', p)); print('Grepping .env is forbidden' if blocked else ''); sys.exit(2 if blocked else 0)\""
+          }
+        ]
+      }
+    ]
+  }
+}
